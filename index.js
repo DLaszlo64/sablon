@@ -1,5 +1,5 @@
 import express from "express"
-import mysql from "mysql2"
+import mysql from "mysql2/promise"
 import dotenv from "dotenv"
 dotenv.config()
 
@@ -46,7 +46,7 @@ app.get("/termekek/elerheto", (req, res) =>{
 app.get("/termekek/kerese/:szoveg", (req, res) =>{
     try{
         const {szoveg} = req.params
-        const sql = `SELECT * FROM termekek WHERE(nev like ?");`
+        const sql = `SELECT * FROM termekek WHERE(nev like ?);`
         const searchPattern = `%${szoveg}%`
         pool.query(sql, [searchPattern], (err, ressult)=> {
             if(err) console.log(err)
