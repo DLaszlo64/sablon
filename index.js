@@ -79,9 +79,8 @@ app.get("/termekek/dragak", (req, res) =>{
 
 app.post("/api/users", async (req, res) =>{
     try{
-        const {name, email} = req.body
         const query = "INSERT INTO kategoriak(id, nev) values(?, ?)"
-        const [ressult] = await pool.query(query, [name, email])
+        const [ressult] = await pool.query(query, ["4", "Aszal"])
         res.status(201).json({message: "Felhasznalo sikeresen hozzáadva", id: ressult.insertId})
     }catch(error){
         res.status(500).json({hiba: error.message})
