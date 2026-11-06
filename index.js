@@ -45,9 +45,13 @@ app.get("/termekek/elerheto", (req, res) =>{
 
 app.get("/termekek/kerese/:szoveg", (req, res) =>{
     try{
-        pool.query(`SELECT * FROM termekek WHERE(nev like "%fej%");`, (err, ressult)=> {
+        const {szoveg} = req.params
+        const sql = `SELECT * FROM termekek WHERE(nev like ?");`
+        const searchPattern = `%${szoveg}%`
+        pool.query(sql, [searchPattern], (err, ressult)=> {
             if(err) console.log(err)
             else res.send(ressult)
+        
         })
     }catch(error){
         res.status(500).json({hiba: error.message})
