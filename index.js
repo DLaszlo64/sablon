@@ -90,7 +90,6 @@ app.post("/api/users",  (req, res) =>{
 })
 
 app.delete("/kategoriak/torles/:id", (req, res) =>{
-    try{
         const {id} = req.params
         const sql = `DELETE FROM kategoriak WHERE(id = ?);`
         const searchPattern = `%${id}%`
@@ -101,9 +100,6 @@ app.delete("/kategoriak/torles/:id", (req, res) =>{
             else res.send(ressult)
         
         })
-    }catch(error){
-        res.status(500).json({hiba: error.message})
-    }
 })
 
 
