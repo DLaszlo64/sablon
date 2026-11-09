@@ -91,6 +91,25 @@ app.post("/api/users", async (req, res) =>{
     }
 })
 
+app.delete("/kategoriak/torles/:id", (req, res) =>{
+    try{
+        const {id} = req.params
+        const sql = `DELETE FROM kategoriak WHERE(id = ?);`
+        const searchPattern = `%${id}%`
+
+
+        pool.query(sql, [searchPattern], (err, ressult)=> {
+            if(err) console.log(err)
+            else res.send(ressult)
+        
+        })
+    }catch(error){
+        res.status(500).json({hiba: error.message})
+    }
+})
+
+
+
 
 app.listen(PORT, () =>{
     console.log(`Server fut http://localhost:${PORT}`)
