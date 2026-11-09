@@ -1,5 +1,5 @@
 import express from "express"
-import mysql from "mysql2/promise"
+import mysql from "mysql2"
 import dotenv from "dotenv"
 dotenv.config()
 
@@ -21,14 +21,12 @@ app.get("/", (req, res) =>{
 })
 
 app.get("/termekek", (req, res) =>{
-    try{
+    
         pool.query("SELECT termekek.id, termekek.nev, ar, keszlet, elerheto, kategoriak.nev FROM `kategoriak`, termekek WHERE(kategoriak.id = termekek.kategoria_id) ORDER BY termekek.ar ASC", (err, ressult)=> {
             if(err) console.log(err)
             else res.send(ressult)
         })
-    }catch(error){
-        res.status(500).json({hiba: error.message})
-    }
+    
 })
 
 app.get("/termekek/elerheto", (req, res) =>{
@@ -81,10 +79,10 @@ app.get("/termekek/dragak", (req, res) =>{
     }
 })
 
-app.post("/api/users", async (req, res) =>{
+app.post("/api/users",  (req, res) =>{
     try{
         const query = "INSERT INTO kategoriak(id, nev) values(?, ?)"
-        const [ressult] = await pool.query(query, ["4", "Aszal"])
+        const [ressult] =  pool.query(query, ["4", "Aszal"])
         res.status(201).json({message: "Felhasznalo sikeresen hozzáadva", id: ressult.insertId})
     }catch(error){
         res.status(500).json({hiba: error.message})
