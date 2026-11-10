@@ -92,7 +92,7 @@ app.post("/api/users",  (req, res) =>{
 app.delete("/kategoriak/torles/:id", (req, res) =>{
         const {id} = req.params
         const sql = `DELETE FROM kategoriak WHERE(id = ?);`
-        const searchPattern = `%${id}%`
+        const searchPattern = id
 
 
         pool.query(sql, [searchPattern], (err, ressult)=> {
